@@ -23,8 +23,11 @@ RUN docker-php-ext-install mcrypt
 # Install the PHP zip extention
 RUN docker-php-ext-install zip
 
-# Install the PHP pdo_mysql extention
-RUN docker-php-ext-install pdo_mysql
+# Install the PHP legacy database drivers
+RUN docker-php-ext-install mysql mysqli
+
+# Install the PHP pdo and pdo_mysql extention
+RUN docker-php-ext-install pdo pdo_mysql
 
 # Install the PHP pdo_pgsql extention
 RUN docker-php-ext-install pdo_pgsql
@@ -40,6 +43,8 @@ RUN docker-php-ext-install gd && \
         --with-jpeg-dir=/usr/lib \
         --with-freetype-dir=/usr/include/freetype2 && \
     docker-php-ext-install gd
+
+ADD ./express.ini /usr/local/etc/php/conf.d
 
 RUN usermod -u 1000 www-data
 
